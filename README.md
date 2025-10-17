@@ -3,6 +3,7 @@
 A Python package designed to **plot stock prices for AMD and NVDA** and create **summary statistics** for their price data.
 
 **IMPORTANT:**  
+- Can use EITHER testing.ipynb or main.py to run the package
 - To run the testing notebook or scripts, run them **outside of the package folder**.
 
 ---
