@@ -1,4 +1,3 @@
-# 
 # Zavier and Freddie Branch
 # Date Created: 16 - 10 - 2025
 # Last Modified: 17 - 10 - 2025
@@ -7,100 +6,106 @@
 
 # Importing libraries required
 import matplotlib.pyplot as plt
-import yfinance as yf
 
-# Downloading the dataset - NVDA = Nvidia, AMD = Advanced Micro Devices
-data1 = yf.download("NVDA", start = "2025-01-01", end = "2025-09-15")
-data2 = yf.download("AMD", start = "2025-01-01", end = "2025-09-15")
 
-### FIGURE 1 - Plotting Close Prices Over Time for NVDA and AMD
 
-# Creating first figure
-plt.figure()
+def all_plot(data1, data2):
+    """
+    This function takes in two datasets and creates three plots:
+    1. Closing Prices of NVDA and AMD over time.
+    2. Trade Volumes of NVDA and AMD over time.
+    3. Intra-day Volatility of NVDA and AMD over time.
 
-# Defining which data I want from the data set (Close Price)
-plt.plot(data1.index, data1['Close'], label = 'Close Price NVDA')
-plt.plot(data2.index, data2['Close'], label = 'Close Price AMD')
+    Parameters:
+    data1 (DataFrame): Dataset for NVDA.
+    data2 (DataFrame): Dataset for AMD.
+    """
+    # Creating first figure
+    plt.figure()
 
-# Labelling x and y axis for the first figure (Close Price)
-plt.xlabel('Date')
-plt.ylabel('Price (USD)')
+    # Defining which data I want from the data set (Close Price)
+    plt.plot(data1.index, data1['Close'], label = 'Close Price NVDA')
+    plt.plot(data2.index, data2['Close'], label = 'Close Price AMD')
 
-# Ensuring the dates are clear for figure 1
-plt.xticks(rotation = 45)
-plt.locator_params(axis = 'x', nbins=8)
+    # Labelling x and y axis for the first figure (Close Price)
+    plt.xlabel('Date')
+    plt.ylabel('Price (USD)')
 
-# Creating a legend for clarity
-plt.legend()
+    # Ensuring the dates are clear for figure 1
+    plt.xticks(rotation = 45)
+    plt.locator_params(axis = 'x', nbins=8)
 
-# Title of figure 1
-plt.title('Comparing AMD and NVDA Closing Price YTD')   # YTD : Year to Date
+    # Creating a legend for clarity
+    plt.legend()
 
-### FIGURE 2 - Plotting Trade Volumes Over Time for NVDA and AMD
+    # Title of figure 1
+    plt.title('Comparing AMD and NVDA Closing Price YTD')   # YTD : Year to Date
 
-# Creating the second figure
-plt.figure()
+    ### FIGURE 2 - Plotting Trade Volumes Over Time for NVDA and AMD
 
-# Defining which data from the dataset is required (Volume)
-plt.plot(data1.index, data1['Volume'], label = 'Volume NVDA')
-plt.plot(data2.index, data2['Volume'], label = 'Volume AMD')
+    # Creating the second figure
+    plt.figure()
 
-# Labelling the x and y axis
-plt.xlabel('Date')
-plt.ylabel('Volume')
+    # Defining which data from the dataset is required (Volume)
+    plt.plot(data1.index, data1['Volume'], label = 'Volume NVDA')
+    plt.plot(data2.index, data2['Volume'], label = 'Volume AMD')
 
-# Title of the graph
-plt.title('Trade Volumes of NVDA and AMD')
+    # Labelling the x and y axis
+    plt.xlabel('Date')
+    plt.ylabel('Volume')
 
-# Ensuring the dates are clear for figure 2
-plt.xticks(rotation=45)
-plt.locator_params(axis='x', nbins=8)
+    # Title of the graph
+    plt.title('Trade Volumes of NVDA and AMD')
 
-# Creating a legend for clarity
-plt.legend()
+    # Ensuring the dates are clear for figure 2
+    plt.xticks(rotation=45)
+    plt.locator_params(axis='x', nbins=8)
 
-# Calculations For Figure 3
+    # Creating a legend for clarity
+    plt.legend()
 
-# Pulling the High, Low, and Open prices from the dataset for NVDA
-high_NVDA = data1['High']['NVDA']
-low_NVDA = data1['Low']['NVDA']
-open_NVDA = data1['Open']['NVDA']
+    # Calculations For Figure 3
 
-# Pulling the High, Low, and Open prices from the dataset for NVDA
-high_AMD = data2['High']['AMD']
-low_AMD = data2['Low']['AMD']
-open_AMD = data2['Open']['AMD']
+    # Pulling the High, Low, and Open prices from the dataset for NVDA
+    high_NVDA = data1['High']['NVDA']
+    low_NVDA = data1['Low']['NVDA']
+    open_NVDA = data1['Open']['NVDA']
 
-# Calculate the intra-day volatility for NVDA
-data1['Volatility NVDA'] = (high_NVDA - low_NVDA)/open_NVDA
+    # Pulling the High, Low, and Open prices from the dataset for NVDA
+    high_AMD = data2['High']['AMD']
+    low_AMD = data2['Low']['AMD']
+    open_AMD = data2['Open']['AMD']
 
-# Calculate the intra-day volatility for AMD
-data2['Volatility AMD'] = (high_AMD - low_AMD)/open_AMD
+    # Calculate the intra-day volatility for NVDA
+    data1['Volatility NVDA'] = (high_NVDA - low_NVDA)/open_NVDA
 
-### FIGURE 3 - Plotting Intra-day Volatility Over Time for AMD and NVDA
+    # Calculate the intra-day volatility for AMD
+    data2['Volatility AMD'] = (high_AMD - low_AMD)/open_AMD
 
-# Defining a third figure showing intra-day volatiltiy
-plt.figure()
+    ### FIGURE 3 - Plotting Intra-day Volatility Over Time for AMD and NVDA
 
-# Plotting the volaility for both NVDA and AMD
-plt.plot(data1.index, data1['Volatility NVDA'], label = 'Volatility NVDA')
-plt.plot(data2.index, data2['Volatility AMD'], label = 'Volatility AMD')
+    # Defining a third figure showing intra-day volatiltiy
+    plt.figure()
 
-# Labelling x and y axis for the third figure (Intra-day Volatility)
-plt.xlabel('Date')
-plt.ylabel('Intra-day Volatility (% of Open Px)')
+    # Plotting the volaility for both NVDA and AMD
+    plt.plot(data1.index, data1['Volatility NVDA'], label = 'Volatility NVDA')
+    plt.plot(data2.index, data2['Volatility AMD'], label = 'Volatility AMD')
 
-# Creating a legend for clarity
-plt.legend()
+    # Labelling x and y axis for the third figure (Intra-day Volatility)
+    plt.xlabel('Date')
+    plt.ylabel('Intra-day Volatility (% of Open Px)')
 
-# Title of figure 3
-plt.title('Intra-day Volatility of NVDA and AMD')
+    # Creating a legend for clarity
+    plt.legend()
 
-# Ensuring the dates are clear for figure 3
-plt.xticks(rotation=45)
-plt.locator_params(axis='x', nbins=8)
+    # Title of figure 3
+    plt.title('Intra-day Volatility of NVDA and AMD')
 
-# Showing all figures / graphs
-plt.show()
+    # Ensuring the dates are clear for figure 3
+    plt.xticks(rotation=45)
+    plt.locator_params(axis='x', nbins=8)
 
-##
+    # Showing all figures / graphs
+    plt.show()
+
+    ##
