@@ -6,6 +6,7 @@ import numpy as np
 
 def basic_statistics(data):
     """
+
     Calculate basic statistics for stock market data.
 
     Returns:
