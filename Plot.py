@@ -7,104 +7,48 @@
 # Importing libraries required
 import matplotlib.pyplot as plt
 
-def all_plot(data1, data2):
+
+def all_plot(AMD_data, NVDA_data):
     """
-    This function takes in two datasets and creates three plots:
-    1. Closing Prices of NVDA and AMD over time.
-    2. Trade Volumes of NVDA and AMD over time.
-    3. Intra-day Volatility of NVDA and AMD over time.
-
-    Parameters:
-    data1 (DataFrame): Dataset for NVDA.
-    data2 (DataFrame): Dataset for AMD.
+    Plots Closing Prices, Trade Volumes, and Intra-day Volatility
+    for AMD and NVDA (multi-index columns).
     """
-    
-    # Creating first figure
-    plt.figure()
 
-    # Defining which data I want from the data set (Close Price)
-    plt.plot(data1.index, data1['Close'], label = 'Close Price NVDA')
-    plt.plot(data2.index, data2['Close'], label = 'Close Price AMD')
+    # Hard-coded stock names (second level of multi-index)
+    stock_AMD = 'AMD'
+    stock_NVDA = 'NVDA'
 
-    # Labelling x and y axis for the first figure (Close Price)
+    # --- FIGURE 1: Closing Prices ---
+    plt.figure(figsize=(10,5))
+    plt.plot(AMD_data.index, AMD_data[('Close', stock_AMD)], label='Close AMD')
+    plt.plot(NVDA_data.index, NVDA_data[('Close', stock_NVDA)], label='Close NVDA')
     plt.xlabel('Date')
     plt.ylabel('Price (USD)')
-
-    # Ensuring the dates are clear for figure 1
-    plt.xticks(rotation = 45)
-    plt.locator_params(axis = 'x', nbins=8)
-
-    # Creating a legend for clarity
+    plt.title('Closing Prices Comparison')
+    plt.xticks(rotation=45)
     plt.legend()
 
-    # Title of figure 1
-    plt.title('Comparing AMD and NVDA Closing Price YTD')   # YTD : Year to Date
-
-    ### FIGURE 2 - Plotting Trade Volumes Over Time for NVDA and AMD
-
-    # Creating the second figure
-    plt.figure()
-
-    # Defining which data from the dataset is required (Volume)
-    plt.plot(data1.index, data1['Volume'], label = 'Volume NVDA')
-    plt.plot(data2.index, data2['Volume'], label = 'Volume AMD')
-
-    # Labelling the x and y axis
+    # --- FIGURE 2: Trade Volumes ---
+    plt.figure(figsize=(10,5))
+    plt.plot(AMD_data.index, AMD_data[('Volume', stock_AMD)], label='Volume AMD')
+    plt.plot(NVDA_data.index, NVDA_data[('Volume', stock_NVDA)], label='Volume NVDA')
     plt.xlabel('Date')
     plt.ylabel('Volume')
-
-    # Title of the graph
-    plt.title('Trade Volumes of NVDA and AMD')
-
-    # Ensuring the dates are clear for figure 2
+    plt.title('Trade Volumes Comparison')
     plt.xticks(rotation=45)
-    plt.locator_params(axis='x', nbins=8)
-
-    # Creating a legend for clarity
     plt.legend()
 
-    # Calculations For Figure 3
+    # --- FIGURE 3: Intra-day Volatility ---
+    AMD_data[('Volatility', stock_AMD)] = (AMD_data[('High', stock_AMD)] - AMD_data[('Low', stock_AMD)]) / AMD_data[('Open', stock_AMD)]
+    NVDA_data[('Volatility', stock_NVDA)] = (NVDA_data[('High', stock_NVDA)] - NVDA_data[('Low', stock_NVDA)]) / NVDA_data[('Open', stock_NVDA)]
 
-    # Pulling the High, Low, and Open prices from the dataset for NVDA
-    high_NVDA = data1['High']['NVDA']
-    low_NVDA = data1['Low']['NVDA']
-    open_NVDA = data1['Open']['NVDA']
-
-    # Pulling the High, Low, and Open prices from the dataset for NVDA
-    high_AMD = data2['High']['AMD']
-    low_AMD = data2['Low']['AMD']
-    open_AMD = data2['Open']['AMD']
-
-    # Calculate the intra-day volatility for NVDA
-    data1['Volatility NVDA'] = (high_NVDA - low_NVDA)/open_NVDA
-
-    # Calculate the intra-day volatility for AMD
-    data2['Volatility AMD'] = (high_AMD - low_AMD)/open_AMD
-
-    ### FIGURE 3 - Plotting Intra-day Volatility Over Time for AMD and NVDA
-
-    # Defining a third figure showing intra-day volatiltiy
-    plt.figure()
-
-    # Plotting the volaility for both NVDA and AMD
-    plt.plot(data1.index, data1['Volatility NVDA'], label = 'Volatility NVDA')
-    plt.plot(data2.index, data2['Volatility AMD'], label = 'Volatility AMD')
-
-    # Labelling x and y axis for the third figure (Intra-day Volatility)
+    plt.figure(figsize=(10,5))
+    plt.plot(AMD_data.index, AMD_data[('Volatility', stock_AMD)], label='Volatility AMD')
+    plt.plot(NVDA_data.index, NVDA_data[('Volatility', stock_NVDA)], label='Volatility NVDA')
     plt.xlabel('Date')
-    plt.ylabel('Intra-day Volatility (% of Open Px)')
-
-    # Creating a legend for clarity
+    plt.ylabel('Intra-day Volatility')
+    plt.title('Intra-day Volatility Comparison')
+    plt.xticks(rotation=45)
     plt.legend()
 
-    # Title of figure 3
-    plt.title('Intra-day Volatility of NVDA and AMD')
-
-    # Ensuring the dates are clear for figure 3
-    plt.xticks(rotation=45)
-    plt.locator_params(axis='x', nbins=8)
-
-    # Showing all figures / graphs
     plt.show()
-
-    
