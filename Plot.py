@@ -7,8 +7,6 @@
 # Importing libraries required
 import matplotlib.pyplot as plt
 
-
-
 def all_plot(data1, data2):
     """
     This function takes in two datasets and creates three plots:
@@ -20,6 +18,7 @@ def all_plot(data1, data2):
     data1 (DataFrame): Dataset for NVDA.
     data2 (DataFrame): Dataset for AMD.
     """
+    
     # Creating first figure
     plt.figure()
 
@@ -108,4 +107,4 @@ def all_plot(data1, data2):
     # Showing all figures / graphs
     plt.show()
 
-    ##
+    
