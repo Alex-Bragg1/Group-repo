@@ -32,8 +32,7 @@ def basic_statistics(data):
 def overall_percentage_change(data):
     """
     Calculate the overall percentage change from the first to the last two stock points.
-    """
-    
+    """    
     data = np.array(data)
     
     return (data[-1] - data[0]) / data[0] * 100 if len(data) > 1 else 0
@@ -41,8 +40,7 @@ def overall_percentage_change(data):
 def daily_percentage_change(data):
     """
     Calculate the daily percentage change from the last two stock points.
-    """
-    
+    """    
     data = np.array(data) 
     
     return (data[-1] - data[-2]) / data[-2] * 100 if len(data) > 1 else 0
